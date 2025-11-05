@@ -1,0 +1,592 @@
+:root {
+  --primary-color: #3498db;
+  --secondary-color: #2ecc71;
+  --danger-color: #e74c3c;
+  --warning-color: #f39c12;
+  --background-color: #f5f7fa;
+  --card-bg: #ffffff;
+  --text-color: #333333;
+  --border-color: #e0e0e0;
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s ease;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: var(--transition);
+}
+
+body.dark-mode {
+  --primary-color: #2980b9;
+  --secondary-color: #27ae60;
+  --background-color: #1a1a1a;
+  --card-bg: #2c2c2c;
+  --text-color: #e0e0e0;
+  --border-color: #444444;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  color: var(--text-color);
+}
+
+.theme-toggle {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-color);
+  transition: var(--transition);
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+}
+
+#alarmStatus {
+  padding: 10px 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  font-weight: bold;
+  text-align: center;
+  transition: var(--transition);
+}
+
+.normal {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.alarm {
+  background-color: var(--danger-color);
+  color: white;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.7;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 10px 15px;
+  background-color: var(--secondary-color);
+  color: white;
+  border-radius: 5px;
+  box-shadow: var(--shadow);
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: var(--transition);
+  z-index: 1000;
+}
+
+.notification.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.dashboard {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.dashboard-section {
+  background-color: var(--card-bg);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+
+.dashboard-section h2 {
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.readings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.value-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 15px;
+  text-align: center;
+  transition: var(--transition);
+}
+
+.value-card h3 {
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+.value-container {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.value-container.secondary {
+  font-size: 1.2rem;
+  color: var(--text-color);
+  opacity: 0.7;
+  margin-top: 5px;
+}
+
+.unit {
+  font-size: 0.9em;
+  margin-left: 2px;
+}
+
+.above-threshold-card {
+  border-color: var(--danger-color);
+  box-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
+  animation: pulse 1.5s infinite;
+}
+
+#chart {
+  height: 450px;
+  width: 100%;
+}
+
+#map {
+  height: 400px;
+  width: 100%;
+  border-radius: 5px;
+}
+
+.thresholds-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 15px;
+}
+
+.threshold-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.threshold-group label {
+  min-width: 120px;
+}
+
+.threshold-group input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+}
+
+.set-btn {
+  padding: 8px 12px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.set-btn:hover {
+  background-color: #2980b9;
+}
+
+.threshold-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.action-btn {
+  padding: 10px 15px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.action-btn:hover {
+  background-color: #2980b9;
+}
+
+.data-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.readings-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.readings-table th,
+.readings-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.readings-table th {
+  background-color: rgba(0, 0, 0, 0.05);
+  font-weight: bold;
+}
+
+.readings-table tr:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.hidden {
+  display: none;
+}
+
+footer {
+  margin-top: 30px;
+  text-align: center;
+  padding: 20px 0;
+  border-top: 1px solid var(--border-color);
+  color: var(--text-color);
+}
+
+@media (max-width: 768px) {
+  .thresholds-container {
+    grid-template-columns: 1fr;
+  }
+
+  .threshold-group {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .threshold-group input {
+    width: 100%;
+  }
+
+  .threshold-actions {
+    flex-direction: column;
+  }
+
+  .readings-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+}
+
+/* Añadir estos estilos al final del archivo CSS */
+
+.pagination-wrapper {
+  display: flex;
+  justify-content: space-between;
+  /* separa selector y botones */
+  align-items: center;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.pagination-controls {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.pagination-button {
+  padding: 5px 10px;
+  margin: 0 2px;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.pagination-button:hover:not(:disabled) {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.pagination-button:disabled {
+  background-color: #f5f5f5;
+  color: #aaa;
+  cursor: default;
+}
+
+.items-per-page {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.items-per-page-select {
+  padding: 5px;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  background-color: var(--card-bg);
+  color: var(--text-color);
+}
+
+/* Estilos para modo oscuro */
+body.dark-mode .pagination-button:disabled {
+  background-color: #333;
+  color: #666;
+}
+
+body.dark-mode .items-per-page-select {
+  background-color: var(--card-bg);
+  color: var(--text-color);
+}
+
+/* Añadir estos estilos al final del archivo CSS existente */
+
+.filter-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-radius: 8px;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.filter-group label {
+  font-weight: 500;
+}
+
+.filter-group input[type="date"],
+.filter-group input[type="time"] {
+  padding: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.alarm-cell {
+  background-color: rgba(231, 76, 60, 0.2);
+  font-weight: bold;
+}
+
+/* Estilos para modo oscuro */
+body.dark-mode .filter-container {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .alarm-cell {
+  background-color: rgba(231, 76, 60, 0.3);
+}
+
+/* Añadir al final del archivo CSS existente */
+
+.filter-indicator {
+  background-color: var(--warning-color);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-weight: bold;
+  margin-right: 10px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.7;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Estilos para la tabla de alarmas */
+.alarm-row {
+  background-color: rgba(231, 76, 60, 0.05);
+}
+
+.alarm-list {
+  margin: 0;
+  padding-left: 15px;
+  list-style-type: none;
+}
+
+.alarm-item {
+  margin-bottom: 5px;
+  font-size: 0.9em;
+  color: var(--danger-color);
+}
+
+.alarm-item:last-child {
+  margin-bottom: 0;
+}
+
+/* Estilos para los checkbox de tipo de alarma */
+.alarm-type-filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.02);
+  border-radius: 6px;
+}
+
+.alarm-type-checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.alarm-type-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border-color);
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.alarm-type-checkbox:checked {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.alarm-type-checkbox:checked::after {
+  content: "✓";
+  position: absolute;
+  color: white;
+  font-size: 14px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.alarm-type-checkbox:hover {
+  border-color: var(--primary-color);
+}
+
+.alarm-type-checkbox-label {
+  font-size: 0.9em;
+  cursor: pointer;
+}
+
+/* Colores específicos para cada tipo de alarma */
+.alarm-type-temperatura .alarm-type-checkbox:checked {
+  background-color: #e74c3c;
+  /* Rojo para temperatura */
+}
+
+.alarm-type-humedad .alarm-type-checkbox:checked {
+  background-color: #3498db;
+  /* Azul para humedad */
+}
+
+.alarm-type-metano .alarm-type-checkbox:checked {
+  background-color: #9b59b6;
+  /* Púrpura para metano */
+}
+
+.alarm-type-propano .alarm-type-checkbox:checked {
+  background-color: #f39c12;
+  /* Naranja para propano */
+}
+
+.alarm-type-butano .alarm-type-checkbox:checked {
+  background-color: #e67e22;
+  /* Naranja oscuro para butano */
+}
+
+.alarm-type-co .alarm-type-checkbox:checked {
+  background-color: #c0392b;
+  /* Rojo oscuro para CO */
+}
+
+.alarm-type-humo .alarm-type-checkbox:checked {
+  background-color: #7f8c8d;
+  /* Gris para humo */
+}
+
+.alarm-type-gas .alarm-type-checkbox:checked {
+  background-color: #16a085;
+  /* Verde azulado para gas */
+}
+
+/* Título para la sección de filtros de alarma */
+.alarm-filters-title {
+  font-size: 1em;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: var(--text-color);
+}
